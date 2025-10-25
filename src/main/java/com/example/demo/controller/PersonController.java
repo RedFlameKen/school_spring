@@ -1,18 +1,27 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.configuration.DatabaseConfig;
-import com.example.demo.entity.PersonEntity;
-import com.example.demo.request.PersonRequest;
-import com.example.demo.repository.PersonRepository;
-import com.example.demo.request.UserInputRequest;
-import com.example.demo.response.APIResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import com.example.demo.entity.PersonEntity;
+import com.example.demo.repository.PersonRepository;
+import com.example.demo.request.PersonRequest;
+import com.example.demo.response.APIResponse;
 
 @RestController
 @RequestMapping("/api")
@@ -20,14 +29,11 @@ import java.util.*;
 public class PersonController {
 
     @Autowired
-    DatabaseConfig config;
-
-    @Autowired
     PersonRepository personRepository;
 
     @GetMapping("details")
     public ResponseEntity<?> getPersonDetails(){
-        System.out.println("=======" + config.getDatabaseURL());
+        // System.out.println("=======" + config.getDatabaseURL());
 
         List<PersonEntity> getPersonEntities = personRepository.findAll();
 
@@ -37,7 +43,7 @@ public class PersonController {
                 getPersonEntities
         );
 
-        Map<String, String> data = new HashMap<>();
+        // Map<String, String> data = new HashMap<>();
 
         return ResponseEntity.ok(response);
     }
@@ -56,7 +62,7 @@ public class PersonController {
 
         Optional<PersonEntity> findPerson = personRepository.findById(id);
 
-        APIResponse response = new APIResponse<>("Successfully found", 200, findPerson);
+        APIResponse<PersonEntity> response = new APIResponse<>("Successfully found", 200, findPerson.get());
 
 
         return ResponseEntity.ok(response);
@@ -72,7 +78,7 @@ public class PersonController {
             personToUpdate.setFirstName(person.getFirstName());
             personToUpdate.setLastName(person.getLastName());
             personRepository.save(personToUpdate);
-            APIResponse updatePerson = new APIResponse<>("Successfully Changed", 200, null);
+            APIResponse<?> updatePerson = new APIResponse<>("Successfully Changed", 200, null);
             return ResponseEntity.ok(updatePerson);
         }
 

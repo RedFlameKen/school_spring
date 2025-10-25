@@ -26,5 +26,17 @@ public class PokemonRestAPIService {
 
     }
 
+    public boolean deletePokemon(Long id){
+        Optional<Pokemon> found = pokemonRepository.findById(id);
+
+        if(!found.isPresent()){
+            return false;
+        }
+
+        pokemonRepository.delete(found.get());
+
+        return true;
+    }
+
 
 }

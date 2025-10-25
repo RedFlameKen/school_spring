@@ -1,11 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Category;
-import com.example.demo.entity.Pokemon;
-import org.springframework.data.jpa.repository.EntityGraph;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.example.demo.entity.Pokemon;
 
 public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
 

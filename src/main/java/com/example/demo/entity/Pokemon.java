@@ -8,8 +8,8 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
 @Entity
+@Table(name="pokemon")
 public class Pokemon {
 
     @Id
